@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kbt-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: kbt
+
+  template:
+    metadata:
+      labels:
+        app: kbt
+
+    spec:
+      containers:
+        - name: kbt-app
+          image: kbt-app:latest
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 8089
+
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/kbt"
+
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_ROOT_PASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kbt-service
+
+spec:
+  selector:
+    app: kbt
+
+  ports:
+    - port: 8089
+      targetPort: 8089
+
+  type: NodePort
