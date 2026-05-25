@@ -24,7 +24,7 @@ Aplicación RESTful construida con Spring Boot para gestión de vuelos, contened
 | POST | /flight/save | Crear vuelo |
 | GET | /flight/listAll | Listar todos |
 | GET | /flight/list/{id} | Buscar por ID |
-| GET | /flight/topFlights | Vuelos rating ≥ 4 |
+| GET | /flight/topFlights | Vuelos rating |
 | PUT | /flight | Actualizar vuelo |
 | DELETE | /flight/{id} | Eliminar vuelo |
 
@@ -65,10 +65,4 @@ kubectl port-forward svc/argocd-server -n argocd 9090:443
 # Abrir https://localhost:9090
 ```
 
-## Estructura del proyecto
-src/main/java/com/udea/kbt/
-├── controller/   FlightController
-├── service/      FlightService
-├── dao/          IFlightDAO
-├── model/        Flight
-└── exception/    FlightNotFoundException, ModelNotFoundException, InvalidRating
+
